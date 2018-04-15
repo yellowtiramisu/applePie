@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var listOfWords = ["apple", "lorenzo", "gulsel", "home"]
+    var listOfWords = ["ricotta", "bread", "borek", "home"]
     let incorrectMovesAllowed = 7
     var totalWins = 0 {
         didSet { // property observers: whenever these are updated, new round!
@@ -52,6 +52,7 @@ class ViewController: UIViewController {
             updateUI()
         } else {
             enableLetterButtons(false) // we disable the keyboard for good.
+            updateUI()
         }
     }
     
@@ -108,5 +109,20 @@ class ViewController: UIViewController {
         updateGameState()
     }
 
+    @IBAction func enterPressedOnTextField(_ sender: UITextField) {
+        // we should compare the input with the Game.word,
+        // if it's the same, win, otherwise, incorrectMovesRemaining -= 1
+        // then updateGameState
+        
+        if sender.text?.lowercased() == currentGame.word {
+            totalWins += 1
+        } else {
+            currentGame.incorrectMovesRemaining -= 1
+            updateGameState()
+        }
+        
+        sender.text = ""
+        sender.resignFirstResponder()
+    }
 }
 
